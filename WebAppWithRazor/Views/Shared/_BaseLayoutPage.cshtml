@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "_BasePage";
+    Layout = LayoutModel.BasePage;
 }
 <div class="page-sidebar">
     <partial name="_PageSidebar" />
@@ -116,3 +116,21 @@
     </div>
     <!-- /Page Inner -->
 </div>
+@section Scripts
+{
+    var urlIndex = '@Url.Action("Index")';
+    var urlSearch = '@Url.Action("Search")';
+    var urlBulkDownload = '@Url.Action("BulkDownload")';
+    var urlBulkUpload = '@Url.Action("BulkUpload")';
+    var urlExportData = '@Url.Action("ExportData")';
+    var urlNew = '@Url.Action("Create")';
+    var urlEdit = '@Url.Action("Edit")';
+    var urlView = '@Url.Action("View")';
+    var urlDelete = '@Url.Action("Delete")';
+    var urlSave = '@Url.Action("Save")';
+    var urlPrivace = '@Url.Action("Privacy")';
+
+    var variableFromBaseLayout = "VariableFromBaseLayout";
+
+    @RenderSection("Scripts", false)
+}

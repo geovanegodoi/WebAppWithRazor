@@ -20,7 +20,10 @@ namespace WebAppWithRazor.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var vmUser = new UserViewModel();
+            var vmUser = new UserViewModel()
+            {
+                //Collection = _context.Users.ToList()
+            };
             return View(vmUser);
         }
 

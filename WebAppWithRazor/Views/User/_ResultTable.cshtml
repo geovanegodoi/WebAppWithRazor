@@ -8,6 +8,7 @@
             <th>Age</th>
             <th>Start date</th>
             <th>Salary</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -20,13 +21,16 @@
                 <td>@user.Age</td>
                 <td>@user.StartDate</td>
                 <td>@user.Salary</td>
+                <td><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td>
             </tr>
         }
     </tbody>
 </table>
 @section Scripts
-{
+    {
     <script type="text/javascript">
-        var scriptsResultTable = "";
+        $(".glyphicon-remove-circle").click(function () {
+            alert("delete item ?"); s
+        });
     </script>
 }

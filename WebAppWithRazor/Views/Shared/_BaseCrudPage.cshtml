@@ -38,10 +38,15 @@
 {
     <script type="text/javascript">
         $("#btnSearch").click(function () {
-            $("#tblResult").load(urlResult, function (response, status, xhr)
-            {
-                if (status == "error") {
+            $("#tblResult").load(urlResult, function (response, status, xhr) {
+                if (xhr.status == 200) {
+                    $(".glyphicon-remove-circle").click(function () {
+                        alert("delete item ?");
+                    });
+                }
+                else {
                     var msg = "Sorry but there was an error: ";
+                    alert(msg);
                 }
             });
         });

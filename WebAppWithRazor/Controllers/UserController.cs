@@ -32,5 +32,19 @@ namespace WebAppWithRazor.Controllers
         {
             return PartialView("_ResultTable", _context.Users.ToList());
         }
+
+        [HttpGet]
+        public IActionResult Edit(long id)
+        {
+            var model = _context.Users.FirstOrDefault(u => u.Id == id);
+
+            return View("Model", model);
+        }
+
+        [HttpPost]
+        public IActionResult Save(UserModel model)
+        {
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

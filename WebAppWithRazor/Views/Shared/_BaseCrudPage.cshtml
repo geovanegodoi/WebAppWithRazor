@@ -1,6 +1,7 @@
 ﻿@{
     Layout = LayoutModel.BaseLayoutPage;
 }
+<!-- Search -->
 <div class="row" id="rowSearch">
     <div class="col-md-12">
         <div class="panel panel-white">
@@ -19,6 +20,7 @@
         </div>
     </div>
 </div>
+<!-- Result -->
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-white">
@@ -32,17 +34,57 @@
             </div>
         </div>
     </div>
-</div><!-- Row -->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="document" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@ViewBag.Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmCrudModal" asp-action="Save">
+                <div class="modal-body">
+                    <div id="crudPanel" class="col-md-12"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnSaveModal" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @RenderBody()
-@section Scripts 
-{
+@section Scripts
+    {
     <script type="text/javascript">
         $("#btnSearch").click(function () {
             $("#tblResult").load(urlResult, function (response, status, xhr) {
                 if (xhr.status == 200) {
                     $(".btn-crud-edit").click(function () {
-                        var url = urlDelete + "/" + $(this).attr("crud-id");
-                        alert("edit " + url + " ?");
+                        var fullUrl = urlEdit + "/" + $(this).attr("crud-id");
+                        $("#crudPanel").load(fullUrl, function (response, status, xhr) {
+                            if (xhr.status == 200) {
+
+                            }
+                        });
+                        /*
+                        $("btnSaveModal").click(function () {
+                            var xhr = $.ajax({url: urlSave,method : "POST"})
+                                .done(function () {
+                                    alert("sucess");
+                                })
+                                .fail(function () {
+                                    alert("fail");
+                                })
+                                .always(function () {
+                                    alert("complete");
+                                });
+                        });
+                        */
                     });
                     $(".btn-crud-delete").click(function () {
                         var url = urlDelete + "/" + $(this).attr("crud-id");

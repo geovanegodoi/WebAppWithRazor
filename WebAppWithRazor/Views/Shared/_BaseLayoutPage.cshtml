@@ -116,21 +116,16 @@
     </div>
     <!-- /Page Inner -->
 </div>
-@section Scripts
+@section Scripts 
 {
-    var urlIndex = '@Url.Action("Index")';
-    var urlSearch = '@Url.Action("Search")';
-    var urlBulkDownload = '@Url.Action("BulkDownload")';
-    var urlBulkUpload = '@Url.Action("BulkUpload")';
-    var urlExportData = '@Url.Action("ExportData")';
-    var urlNew = '@Url.Action("Create")';
-    var urlEdit = '@Url.Action("Edit")';
-    var urlView = '@Url.Action("View")';
-    var urlDelete = '@Url.Action("Delete")';
-    var urlSave = '@Url.Action("Save")';
-    var urlPrivace = '@Url.Action("Privacy")';
-
-    var variableFromBaseLayout = "VariableFromBaseLayout";
-
+    <script type="text/javascript">
+        var urlIndex = '@Url.Action("Index")';
+        var urlResult = '@Url.Action("Result")';
+        var urlCreate = '@Url.Action("Create")';
+        var urlEdit = '@Url.Action("Edit")';
+        var urlView = '@Url.Action("View")';
+        var urlDelete = '@Url.Action("Delete")';
+        var urlSave = '@Url.Action("Save")';
+    </script>   
     @RenderSection("Scripts", false)
 }

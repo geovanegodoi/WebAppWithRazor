@@ -1,0 +1,26 @@
+﻿@model ICollection<UserModel>
+<table class="display table" style="width: 100%; cellspacing: 0;">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Position</td>
+                <td>@user.Office</td>
+                <td>@user.Age</td>
+                <td>@user.StartDate</td>
+                <td>@user.Salary</td>
+            </tr>
+        }
+    </tbody>
+</table>

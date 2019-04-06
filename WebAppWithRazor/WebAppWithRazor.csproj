@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -309,5 +309,10 @@
     <Content Remove="wwwroot\lib\theme\plugins\bootstrap-timepicker\css\bootstrap-timepicker.css" />
     <Content Remove="wwwroot\lib\theme\plugins\bootstrap-timepicker\css\bootstrap-timepicker.min.css" />
     <Content Remove="wwwroot\lib\theme\plugins\bootstrap-timepicker\js\bootstrap-timepicker.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\User\_ResultTable.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 </Project>

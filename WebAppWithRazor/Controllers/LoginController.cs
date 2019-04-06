@@ -12,13 +12,6 @@ namespace WebAppWithRazor.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly LinkGenerator _linkGenerator;
-
-        public LoginController(LinkGenerator linkGenerator)
-        {
-            _linkGenerator = linkGenerator;
-        }
-
         // GET: /<controller>/
         [HttpGet]
         public IActionResult Index()

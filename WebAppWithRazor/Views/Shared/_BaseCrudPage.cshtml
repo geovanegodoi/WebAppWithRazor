@@ -40,8 +40,13 @@
         $("#btnSearch").click(function () {
             $("#tblResult").load(urlResult, function (response, status, xhr) {
                 if (xhr.status == 200) {
-                    $(".glyphicon-remove-circle").click(function () {
-                        alert("delete item ?");
+                    $(".btn-crud-edit").click(function () {
+                        var url = urlDelete + "/" + $(this).attr("crud-id");
+                        alert("edit " + url + " ?");
+                    });
+                    $(".btn-crud-delete").click(function () {
+                        var url = urlDelete + "/" + $(this).attr("crud-id");
+                        alert("remove " + url + " ?");
                     });
                 }
                 else {

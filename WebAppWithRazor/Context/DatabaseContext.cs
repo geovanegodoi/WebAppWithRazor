@@ -8,11 +8,16 @@ namespace WebAppWithRazor.Context
 {
     public class DatabaseContext
     {
-        public IEnumerable<UserModel> Users { get; }
+        public IList<UserModel> Users { get; }
+
+        private static DatabaseContext _instance = null;
 
         public static DatabaseContext Create()
         {
-            return new DatabaseContext();
+            if (_instance == null)
+                _instance = new DatabaseContext();
+
+            return _instance;
         }
 
         private DatabaseContext()
@@ -20,9 +25,9 @@ namespace WebAppWithRazor.Context
             this.Users = SeedUsers();
         }
 
-        private IEnumerable<UserModel> SeedUsers()
+        private IList<UserModel> SeedUsers()
         {
-            return new HashSet<UserModel>
+            return new List<UserModel>
             {
                 new UserModel { Id = 1, Name = "Tiger Nixon"    , Position = "System Architect"           , Office = "Tokyo"        , Age = 33, StartDate = new DateTime(2009, 11, 01), Salary = 162.800f },
                 new UserModel { Id = 2, Name = "Garrett Winters", Position = "Senior Javascript Developer", Office = "London"       , Age = 47, StartDate = new DateTime(2010, 08, 12), Salary = 320.800f },

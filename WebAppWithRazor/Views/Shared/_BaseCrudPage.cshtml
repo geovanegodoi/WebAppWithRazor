@@ -2,18 +2,26 @@
     Layout = LayoutModel.BaseLayoutPage;
 }
 <!-- Search -->
-<div class="row" id="rowSearch">
+<div class="row">
+    <div class="col-md-12 form-group">
+        <div class="btn-group" role="group" aria-label="...">
+            <button id="btnNew" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;&nbsp;New&nbsp;&nbsp;</button>
+            <button id="btnFilter" type="button" class="btn btn-info" data-toggle="collapse" data-target="#rowSearch"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>&nbsp;&nbsp;Filter&nbsp;&nbsp;</button>
+        </div>
+    </div>
+</div>
+<div class="row collapse" id="rowSearch">
     <div class="col-md-12">
         <div class="panel panel-white">
-            <div class="panel-body">
+            <div class="panel-body" style="">
                 <div class="form-inline">
-                    <div class="col-md-11">
+                    <div class="col-md-10">
                         @RenderSection("Search", false)
                     </div>
-                    <div class="col-md-1">
-                        <div class="form-group">
-                            <button id="btnSearch" name="btnSearch" type="button" class="btn btn-danger">Search</button>
-                        </div>
+                    <div class="col-md-2">
+                        <button id="btnSearch" type="button" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;&nbsp;Search&nbsp;&nbsp;
+                        </button>
                     </div>
                 </div>
             </div>
@@ -36,7 +44,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="document" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="panelCrudModal" tabindex="-1" role="document" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -47,11 +55,12 @@
             </div>
             <form id="frmCrudModal" asp-action="Save">
                 <div class="modal-body">
-                    <div id="crudPanel" class="col-md-12"></div>
+                    <div id="panelCrudContent" class="row">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="btnSaveModal" class="btn btn-primary">Save changes</button>
+                    <button type="button" id="btnModalCancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnModalSave" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
@@ -61,42 +70,64 @@
 @section Scripts
     {
     <script type="text/javascript">
-        $("#btnSearch").click(function () {
-            $("#tblResult").load(urlResult, function (response, status, xhr) {
-                if (xhr.status == 200) {
-                    $(".btn-crud-edit").click(function () {
-                        var fullUrl = urlEdit + "/" + $(this).attr("crud-id");
-                        $("#crudPanel").load(fullUrl, function (response, status, xhr) {
-                            if (xhr.status == 200) {
-
-                            }
-                        });
-                        /*
-                        $("btnSaveModal").click(function () {
-                            var xhr = $.ajax({url: urlSave,method : "POST"})
-                                .done(function () {
-                                    alert("sucess");
-                                })
-                                .fail(function () {
-                                    alert("fail");
-                                })
-                                .always(function () {
-                                    alert("complete");
-                                });
-                        });
-                        */
-                    });
-                    $(".btn-crud-delete").click(function () {
-                        var url = urlDelete + "/" + $(this).attr("crud-id");
-                        alert("remove " + url + " ?");
-                    });
-                }
-                else {
+        var selectors =
+        {
+            ButtonNew: "#btnNew",
+            ButtonFilter: "#btnFilter",
+            ButtonSearch: "#btnSearch",
+            ModalPanel: "#panelCrudModal",
+            ModalContent: "#panelCrudContent",
+            ModalForm: "#frmCrudModal",
+            ModalBtnCancel: "#btnModalCancel",
+            ModalBtnSave: "#btnModalSave",
+            TableResult: "#tblResult"
+        }
+        $(document).ready(function () {
+            $(selectors.ButtonNew).click(function (e) {
+                $(selectors.ModalContent).load(urlCreate, function (response, status, xhr) {
+                    if (xhr.status == 200) {
+                        $(selectors.ModalPanel).modal("show");
+                    }
+                });
+            });
+            $(selectors.ButtonSearch).click(function () {
+                LoadResultTable();
+            });
+            RegisterModalEvents();
+        });
+        function LoadResultTable() {
+            $(selectors.TableResult).load(urlResult, function (response, status, xhr) {
+                if (xhr.status != 200) {
                     var msg = "Sorry but there was an error: ";
                     alert(msg);
                 }
+                RegisterModalEvents();
             });
-        });
+        }
+        function RegisterModalEvents() {
+            $(".btn-crud-edit").click(function () {
+                var requestUrl = urlEdit + "/" + $(this).attr("crud-id");
+                $(selectors.ModalContent).load(requestUrl, function (response, status, xhr) {
+                    if (xhr.status == 200) {
+                        $(selectors.ModalPanel).modal();
+                    }
+                });
+            });
+            $(".btn-crud-delete").click(function () {
+                var requestUrl = urlDelete + "/" + $(this).attr("crud-id");
+                if (confirm("Really want to delete this item ?")) {
+                    $.ajax({
+                        url: requestUrl,
+                        type: "DELETE",
+                    }).fail(function (data, textStatus, jqXHR) {
+                        var msg = "Sorry but there was an error: ";
+                            alert(msg);
+                    }).always(function (data, textStatus, jqXHR) {
+                        LoadResultTable();
+                    });
+                }
+            });
+        }
     </script>
     @RenderSection("Scripts", false)
 }
